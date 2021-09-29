@@ -1,0 +1,39 @@
+---
+# tasks file for config_fedora
+- hosts: {{ HOST }}
+  become_user: root
+  become: yes
+  tasks:
+
+  - name: Desabilitando o firewalld
+    ansible.builtin.systemd:
+      state: stopped
+      enabled: no
+      daemon_reload: yes
+      name: firewalld
+
+  - name: Desabilitando SELinux
+    selinux:
+        state: disabled
+      
+  - name: Instalando pacotes adicionais
+    package:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - net-tools
+      - mlocate
+      - zip
+      - curl
+      - telnet
+      - vim
+      - python-docker-py.noarch
+      - python-boto.noarch
+      - python-boto3.noarch
+    become: yes
+
+  - name: Atualizando o S.O.
+    yum:
+      name: '*'
+      state: latest
+ 

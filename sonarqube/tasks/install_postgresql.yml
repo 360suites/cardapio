@@ -1,0 +1,27 @@
+---
+- name: Instalando o Postgresql
+  gather_facts: No
+  hosts: "{{ HOST }}"
+  become_user: root
+  become: yes
+
+  tasks:
+    - name: Instalando o Postgresql
+      package:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - postgresql-server
+        - postgresql-contrib
+
+    - name: Iniciando o Banco de dados
+      shell: postgresql-setup initdb
+
+    - name: habilitando e iniciando o serviço do postgresql
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: 
+    

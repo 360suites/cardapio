@@ -1,0 +1,24 @@
+---
+# tasks file for config_fedora
+- hosts: localhost
+  become_user: root
+  become: yes
+  tasks:
+
+  - name: Desabilitando o firewalld
+    ansible.builtin.systemd:
+      state: stopped
+      enabled: no
+      daemon_reload: yes
+      name: firewalld
+
+  - name: Desabilitando SELinux
+    selinux:
+        state: disabled
+      
+  - name: Atualizando o S.O.
+    yum:
+      name: '*'
+      state: latest
+
+ 

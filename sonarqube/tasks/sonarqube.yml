@@ -1,0 +1,23 @@
+---
+- name: Sonarqube
+  gather_facts: No
+  hosts: "{{ HOST }}"
+  become_user: root
+  become: yes
+
+  tasks:
+    - name: Create a data volume 
+      docker_volume:
+        name: sonarqube_data
+
+    - name: Create a logs volume 
+      docker_volume:
+        name: sonarqube_logs
+
+    - name: Create a extensions volume 
+      docker_volume:
+        name: sonarqube_extensions
+
+    - name: subindo container sonarqube
+      shell: docker run -dit -p 9000:9000 --name sonarqube -v sonarqube_data:/opt/sonarqube/data -v sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs --restart=always sonarqube 
+      become: yes

@@ -1,0 +1,52 @@
+---
+# tasks file for config_fedora
+- hosts: local
+  become_user: root
+  become: yes
+  tasks:
+
+  - name: Desabilitando o firewalld
+    ansible.builtin.systemd:
+      state: stopped
+      enabled: no
+      daemon_reload: yes
+      name: firewalld
+
+  - name: Desabilitando SELinux
+    selinux:
+      state: disabled
+      
+  - name: Instalando repositorio EPEL
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+  - name: Instalando repositorio REMI
+    rpm:
+      name: 'https://rpms.remirepo.net/enterprise/remi-release-7.rpm'
+      state: present
+  
+  - name: Atualizando o S.O.
+    yum:
+      name: '*'
+      state: latest
+
+  - name: Instalando o redis
+    yum:
+      name: redis
+      state: latest
+      enabled: yes
+    
+  - name: Habilitando o redis
+    ansible.builtin.systemd:
+      state: started
+      enabled: no
+      daemon_reload: yes
+      name: redis
+  
+  - name: Copiando arquivo redis.conf default
+      copy:
+        src: files/redis.conf
+        dest: /etc/
+        mode: '0777'

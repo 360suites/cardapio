@@ -1,0 +1,17 @@
+---
+- name: Instalando o aws-cli
+  gather_facts: No
+    #hosts: {{ HOSTS }}
+  hosts: ansible
+  become: yes
+
+  tasks:
+    - name: Download pacote aws-cli
+      shell: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+    - name: Extraindo pacote aws-cli
+      shell: unzip awscliv2.zip
+
+    - name: Instalando pacote aws-cli
+      shell: ./aws/install
+      become: yes

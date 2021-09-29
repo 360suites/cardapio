@@ -1,0 +1,16 @@
+---
+- name: Criando novo projeto no gitlab
+  gather_facts: No
+    #hosts: {{ HOSTS }}
+    #hosts: ansible
+  hosts: git  
+  become: yes
+
+  tasks:
+  - name: Criando novo projeto no gitlab
+      community.general.gitlab_project:
+      api_url: https://git.monitoratec.com.br/
+      api_token: "9h6CcY-2giTt-GWKiYUM"
+      api_token: "{{ api_token }}"
+      name: catalogo
+      group: "199"
