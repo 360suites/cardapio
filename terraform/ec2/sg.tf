@@ -1,6 +1,6 @@
 ### security group e liberação de porta
-resource "aws_security_group" "allow_ssh" {
-    name = "allow_ssh"
+resource "aws_security_group" "bastiao" {
+    name = "bastiao"
     vpc_id = "vpc-5c315a37"
     ingress {
         from_port = 22

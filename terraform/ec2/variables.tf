@@ -14,7 +14,7 @@ variable "instance" {
 }
 
 variable "size" {
-    size = "40"
+    default = "40"
 }
 
 variable "imagem" {
