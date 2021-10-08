@@ -1,5 +1,5 @@
 variable "region" {
-default     = "us-east-2"
+default     = "us-east-1"
 description = "Main region"
 }
 variable "profile" {
@@ -14,10 +14,10 @@ variable "instance" {
 }
 
 variable "size" {
-    default = "40"
+    default = "8"
 }
 
 variable "imagem" {
-    default = "ami-00f8e2c955f7ffa9b"
+    default = "ami-00e87074e52e6c9f9"
 }
 
