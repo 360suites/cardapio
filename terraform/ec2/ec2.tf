@@ -10,7 +10,7 @@ resource "aws_instance" "sebastiao" {
     #instance_type = "t3.micro" 
     ami = var.imagem
     instance_type = var.instance
-    tags = {Name = "seabstiao"}
+    tags = {Name = "sebastiao"}
     key_name = "bastiao"
     vpc_security_group_ids = [aws_security_group.bastiao.id]
 
