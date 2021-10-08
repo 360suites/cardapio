@@ -20,4 +20,3 @@ variable "size" {
 variable "imagem" {
     default = "ami-00e87074e52e6c9f9"
 }
-
