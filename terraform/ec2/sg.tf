@@ -1,7 +1,7 @@
 ### security group e liberação de porta
 resource "aws_security_group" "bastiao" {
     name = "bastiao"
-    vpc_id = "vpc-5c315a37"
+    vpc_id = aws_vpc.monitora-develop-vpc.id
     ingress {
         from_port = 22
         to_port = 22
