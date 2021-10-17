@@ -1,0 +1,49 @@
+--- # Install mariadb via ansible on centOS
+  - hosts: {{ host }}
+    become_user: yes
+    vars:
+      mariadb_root_password: {{ mariadb_root_password }}
+    tasks:
+
+      - name: MariaDB | Install database
+        yum:
+          name: '{{ item }}'
+          state: latest
+        with_items:
+          - mariadb
+          - mariadb-server
+          - MySQL-python
+
+      - name: start mariadb server and enable it on reboot
+        service: 
+          name: mariadb 
+          state: started 
+          enabled: true
+
+#      - name: update mariadb root password for all root accounts
+#        mysql_user:
+#          name: root
+#          host: localhost
+#          password: {{ mariadb_root_password }}
+#          login_user: {{ mariadb_root_login }}
+#          login_password: {{ mariadb_root_password }}
+#          check_implicit_admin: yes
+#          priv: "*.*:ALL,GRANT"
+#          with_items:
+#            - localhost
+#            - 127.0.0.1
+#            - ::1
+
+#      - name: Copy root Credentials as .my.cnf 
+#        template:
+#          src: root.cnf.j2
+#          dest: ~/.my.cnf
+#          mode: 0600
+#        when: mariadb_root_pass.changed
+
+      - name: Create DB teste
+        mysql_db:
+          name: {{ db_name }}
+          state: present
+          login_user: {{ mariadb_root_login }}
+          login_password: {{ mysql_root_password }}
