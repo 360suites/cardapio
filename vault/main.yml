@@ -1,0 +1,5 @@
+---
+# tasks file for vault
+- include: ./tasks/create_user.yml
+- include: ./tasks/install _vault.yml
+- include: ./tasks/move_vault_service.yml

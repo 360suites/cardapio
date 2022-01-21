@@ -1,0 +1,39 @@
+---
+# tasks file for config_fedora
+- hosts: bastiao
+  user: "{{ USER }}"
+  become_user: root
+  become: yes
+  tasks:
+
+  - name: "Instalando pre-requisitos"
+    package:
+      name: "{{ item }}"
+      update_cache: yes
+    with_items: "{{ vault_install_prerequisites }}"
+    become: yes
+
+  - name: Download binario vault
+    get_url:
+      url: https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip
+      dest: /tmp/vault_{{ vault_version }}_linux_amd64.zip
+      owner: "{{ vault_user }}"
+      group: "{{ vault_group }}"
+      mode: 0755
+      #checksum: "{{ vault_checksum }}"
+    register: vault_download
+
+  - name: "Descompactando binario do vault"
+    unarchive:
+      src: "{{ vault_download.dest }}"
+      dest: /usr/bin/
+      copy: no
+      owner: "{{ vault_user }}"
+      group: "{{ vault_group }}"
+      mode: 0755
+
+  - name: "Setando binario do vault"
+    capabilities:
+      path: /usr/bin/vault
+      capability: cap_ipc_lock+ep
+      state: present

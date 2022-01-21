@@ -1,0 +1,29 @@
+---
+# tasks file for config_fedora
+- hosts: bastiao
+  user: "{{ USER }}"
+  become_user: root
+  become: yes
+  tasks:
+
+  - name: Copy systemd init file
+    file:
+      src: vault.service
+      dest: /etc/systemd/system/vault.service
+      owner: root
+      group: root
+      daemon_reload: yes
+    notify: systemd_reload
+
+  - name: config file
+    file:
+      src: vault.hcl.j2
+      dest: "{{ vault_config_path }}"
+      owner: "{{ vault_user }}"
+      group: "{{ vault_group }}"
+
+  - name: vault service
+    service:
+      name: vault
+      state: started
+      enabled: yes
