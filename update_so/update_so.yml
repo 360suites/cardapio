@@ -1,16 +1,15 @@
 ---
-# tasks file for config_fedora
-- hosts: docker
+- hosts: "{{ HOST }}"
   become_user: root
   become: yes
   tasks:
 
-  - name: Desabilitando o firewalld
-    ansible.builtin.systemd:
-      state: stopped
-      enabled: no
-      daemon_reload: yes
-      name: firewalld
+#  - name: Desabilitando o firewalld
+#    ansible.builtin.systemd:
+#      state: stopped
+#      enabled: no
+#      daemon_reload: yes
+#      name: firewalld
 
   - name: Desabilitando SELinux
     selinux:
@@ -21,6 +20,7 @@
       name: "{{ item }}"
       state: latest
     with_items:
+      - epel-release.noarch
       - net-tools
       - mlocate
       - zip
@@ -32,11 +32,30 @@
       - python-boto.noarch
       - python-boto3.noarch
       - unzip
-      - pip3
+      - figlet
+      - cockpit
+      - polkit
     become: yes
+
+  - name: Configurando o timezone to America/Sao_Paulo
+    shell: timedatectl set-timezone America/Sao_Paulo
+
+  - name: Configurando o hostname
+    shell: hostnamectl set-hostname teste 
+
+  - name: Copiando motd
+    copy:  
+      src: files/dymotd
+      dest: /usr/src/scripts/dymotd
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Inserindo dymotd no /etc/profile
+    shell: echo "/usr/src/scripts/dymotd" >> /etc/profile
 
   - name: Atualizando o S.O.
     yum:
       name: '*'
       state: latest
- 
+    
