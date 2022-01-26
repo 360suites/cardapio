@@ -41,7 +41,7 @@
     shell: timedatectl set-timezone America/Sao_Paulo
 
   - name: Configurando o hostname
-    shell: hostnamectl set-hostname teste 
+    shell: hostnamectl set-hostname "{{ HOSTNAME }}" 
 
   - name: Copiando motd
     copy:  
