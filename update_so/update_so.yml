@@ -56,6 +56,14 @@
      mode: 0755
      owner: root
      group: root
+     
+  - name: Criando diretório para scripts
+    file:
+     path: /scripts/
+     state: directory
+     mode: 0755
+     owner: root
+     group: root
 
   - name: Copiando motd
     copy:  
