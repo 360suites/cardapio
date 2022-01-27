@@ -37,11 +37,25 @@
       - polkit
     become: yes
 
+  - name: Subindo serviço do cockpit
+    systemd:
+      state: started
+      name: cockpit
+      enabled: yes
+
   - name: Configurando o timezone to America/Sao_Paulo
     shell: timedatectl set-timezone America/Sao_Paulo
 
   - name: Configurando o hostname
     shell: hostnamectl set-hostname "{{ HOSTNAME }}" 
+
+  - name: Criando diretório para o dymotd
+    file:
+     path: /usr/src/scripts/
+     state: directory
+     mode: 0755
+     owner: root
+     group: root
 
   - name: Copiando motd
     copy:  
@@ -49,7 +63,7 @@
       dest: /usr/src/scripts/dymotd
       owner: root
       group: root
-      mode: '0644'
+      mode: '0777'
 
   - name: Inserindo dymotd no /etc/profile
     shell: echo "/usr/src/scripts/dymotd" >> /etc/profile
@@ -58,4 +72,8 @@
     yum:
       name: '*'
       state: latest
+    
+  - name: Reboot do servidor
+    reboot:
+      reboot_timeout: 1800
     
