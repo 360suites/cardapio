@@ -1,7 +1,0 @@
-AD - ja existe ou deverá ser criado?
-
-Qual a quantidade de servidores disponiveis?
-
-Como será montada a infra estrutura? (vmware, k8s)
-
-Qual ambiente rodará nesses servidores? (dev,QA,Prod)?
