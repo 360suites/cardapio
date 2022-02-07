@@ -12,8 +12,7 @@
     lvol:
       vg: "{{ VG_NAME }}"
       lv: "{{ LV_NAME }}"
-      size: "{{ TAMNHO }}"
+      size: "{{ TAMANHO }}"
 
-  - name: Formatando o disco
-    parted:
+  
     

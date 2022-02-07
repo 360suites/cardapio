@@ -1,7 +1,11 @@
 ---
-  - name: Create new partition 
+  - name: Criando nova particao 
     parted:
       device: "{{ DISK }}"
       number: 1
       state: present
-      
+  
+  - name: Formatando o disco
+    filesystem:
+    fstype: lvm
+    dev: "{{ DISK }}"
