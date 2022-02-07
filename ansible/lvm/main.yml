@@ -1,0 +1,8 @@
+---
+- hosts: "{{ HOST }}"
+  become_user: root
+  become: yes
+  tasks:
+
+- include_tasks: ./tasks/partition_full.yml
+- include_tasks: ./tasks/lvm.yml

@@ -1,0 +1,7 @@
+---
+  - name: Create new partition 
+    parted:
+      device: "{{ DISK }}"
+      number: 1
+      state: present
+      

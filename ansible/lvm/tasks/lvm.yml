@@ -1,0 +1,19 @@
+---
+
+  - name: Removendo filtro
+    shell: wipefs -a "{{ DISK }}"
+
+  - name: Criando novo VG
+    lvg:
+      vg: "{{VG_NAME }}"
+      pvs: "{{ DISK }}"
+
+  - name: Criando novo LV
+    lvol:
+      vg: "{{ VG_NAME }}"
+      lv: "{{ LV_NAME }}"
+      size: "{{ TAMNHO }}"
+
+  - name: Formatando o disco
+    parted:
+    

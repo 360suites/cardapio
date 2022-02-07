@@ -38,11 +38,8 @@
     become: yes
 
   - name: Subindo serviço do cockpit
-    systemd:
-      state: started
-      name: cockpit
-      enabled: yes
-
+    shell: systemctl start cockpit; systemctl enable cockpit
+    
   - name: Configurando o timezone to America/Sao_Paulo
     shell: timedatectl set-timezone America/Sao_Paulo
 
